@@ -1,0 +1,264 @@
+<datadef>
+  <struct name="object_possize">
+    <part type="float" name="p_x1"/>
+    <part type="float" name="p_y1"/>
+    <part type="float" name="p_x2"/>
+    <part type="float" name="p_y2"/>
+    <part type="float" name="t_x1"/>
+    <part type="float" name="t_y1"/>
+    <part type="float" name="t_x2"/>
+    <part type="float" name="t_y2"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="raw" size="38"/>
+  </struct>
+
+  <struct name="prop_4">
+    <part type="float" name="tex_rot"/>
+    <part type="int_u32" name="tex_id"/>
+    <part type="string" name="name"><size type="int_u32"/></part>
+    <part type="int_u8"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="int_u32"/>
+  </struct>
+
+  <struct name="prop_9">
+    <part type="float"/>
+    <part type="float"/>
+    <part type="int_u8" name="color1_on"/>
+    <part type="list" list_type="int_u8" name="color1" size="4"/>
+    <part type="int_u8" name="color2_on"/>
+    <part type="list" list_type="int_u8" name="color2" size="4"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u16"/>
+  </struct>
+
+  <struct name="prop_10">
+    <part type="int_u32"/>
+    <part type="raw"><size type="int_u32"/></part>
+  </struct>
+
+  <struct name="prop_1">
+    <part type="int_u32" name="size"/>
+    <match type="int_u32" match_value="0" name="size" mode="ne">
+      <part type="int_u8" name="flag1"/>
+      <part type="int_u8" name="flag2"/>
+      <part type="int_u8" name="flag3"/>
+      <part type="int_u8" name="flag4"/>
+      <match type="int_u32" match_value="1" name="flag1">
+        <part type="raw" name="cmds1"><size type="int_u32"/></part>
+      </match>
+      <match type="int_u32" match_value="1" name="flag2">
+        <part type="raw" name="cmds2"><size type="int_u32"/></part>
+      </match>
+      <match type="int_u32" match_value="1" name="flag3">
+        <part type="raw" name="cmds3"><size type="int_u32"/></part>
+      </match>
+      <match type="int_u32" match_value="1" name="flag4">
+        <part type="raw" name="cmds4"><size type="int_u32"/></part>
+      </match>
+    </match>
+  </struct>
+
+  <struct name="prop_8_sidewalk">
+    <part type="raw" name="cmds" size_local_name="sidewalk_size"/>
+  </struct>
+
+  <struct name="prop_8">
+    <part type="int_u8"/>
+    <part type="int_s32"/>
+    <part type="int_s32"/>
+    <part type="int_s32"/>
+    <part type="int_s32"/>
+    <part type="int_s32"/>
+    <part type="int_s32"/>
+    <part type="int_u32" name="main_size"/>
+    <match type="int_u32" match_value="0" name="main_size" mode="ne">
+      <part type="int_u32" name="sidewalk_size"/>
+      <part type="raw" name="sidewalk_data" size_local_name="sidewalk_size"/>
+      <match type="int_u32" match_value="0" name="sidewalk_size" mode="ne">
+        <part type="float" name="sidewalk_1"/>
+        <part type="float" name="sidewalk_2"/>
+        <part type="float" name="sidewalk_3"/>
+        <part type="int_s32" name="sidewalk_4"/>
+        <part type="int_s32" name="sidewalk_5"/>
+      </match>
+    </match>
+  </struct>
+
+  <struct name="prop_part">
+    <part type="int_u32" name="prop_type"/>
+    <match type="int_u32" match_value="9" name="prop_type">
+      <part type="struct" name="data" struct_name="prop_9"/>
+    </match>
+    <match type="int_u32" match_value="4" name="prop_type">
+      <part type="struct" name="data" struct_name="prop_4"/>
+    </match>
+    <match type="int_u32" match_value="10" name="prop_type">
+      <part type="struct" name="data" struct_name="prop_10"/>
+    </match>
+    <match type="int_u32" match_value="1" name="prop_type">
+      <part type="struct" name="data" struct_name="prop_1"/>
+    </match>
+    <match type="int_u32" match_value="8" name="prop_type">
+      <part type="struct" name="data" struct_name="prop_8"/>
+    </match>
+  </struct>
+
+  <struct name="level_object">
+    <part type="struct" struct_name="object_possize"/>
+    <part type="struct" struct_name="object_possize"/>
+    <part type="struct" struct_name="object_possize"/>
+    <part type="struct" struct_name="object_possize"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="string" name="name"><size type="int_u32"/></part>
+    <part type="int_u8" name="flags1"/>
+    <part type="int_u8" name="flags2"/>
+    <part type="int_u8" name="flags3"/>
+    <part type="int_u8" name="flags4"/>
+    <part type="int_u8" name="flags5"/>
+    <match type="int_u8" match_value="1" name="flags2">
+      <part type="int_u8" name="flags2val"/>
+    </match>
+    <part type="string" name="path"><size type="int_u32"/></part>
+    <part type="int_s32"/>
+    <part type="int_s32"/>
+
+    <part type="struct" struct_name="prop_part"/>
+    <part type="struct" struct_name="prop_part"/>
+    <part type="struct" struct_name="prop_part"/>
+    <part type="struct" struct_name="prop_part"/>
+    <part type="struct" struct_name="prop_part"/>
+    <part type="struct" struct_name="prop_part"/>
+    <part type="struct" struct_name="prop_part"/>
+
+
+
+  </struct>
+
+  <struct name="headerthing">
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="float"/>
+  </struct>
+
+  <struct name="main">
+    <part type="string"><size type="int_u8"/></part>
+    <part type="raw"><size type="int_u8"/></part>
+    <part type="list" list_type="int_u8" size="4"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u8"/>
+    <part type="int_u8"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="int_u32"/>
+    <part type="float"/>
+    <part type="int_u8"/>
+    <part type="int_u8"/>
+    <part type="int_u32"/>
+    <part type="string"><size type="int_u32"/></part>
+    <part type="string"><size type="int_u32"/></part>
+    <part type="list" list_type="int_u32"><size type="int_u32"/></part>
+
+
+    <part type="raw" size="32"/>
+    <part type="list" list_type="int_u8" size="4"/>
+    <part type="int_u32"/>
+    <part type="int_u8"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="list" list_type="float" size="3"/>
+    <part type="list" list_type="int_u8" size="4"/>
+    <part type="int_u8"/>
+    <part type="int_u32"/>
+    <part type="list" list_type="float" size="4"/>
+    <part type="list" list_type="int_u8" size="4"/>
+    <part type="int_u8"/>
+    <part type="int_u32"/>
+    <part type="raw" size="8"/>
+    <part type="int_u8"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="float"/>
+    <part type="float"/>
+    <part type="raw" size="8"/>
+
+    <part type="string"><size type="int_u32"/></part>
+    <part type="string"><size type="int_u32"/></part>
+    <part type="string"><size type="int_u32"/></part>
+    <part type="string"><size type="int_u32"/></part>
+    <part type="list" list_type="int_u8" size="4"/>
+    <part type="list" list_type="int_u8" size="4"/>
+
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u16"/>
+    <part type="int_s32"/>
+    <part type="int_s32"/>
+    <part type="int_u16"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="int_u32"/>
+    <part type="raw" size="5"/>
+    <part type="list" list_type="struct" struct_name="headerthing">
+        <size type="int_u32"/>
+    </part>
+
+
+    <part type="int_u32"/>
+
+
+    <part type="struct" struct_name="level_object"/>
+
+
+    <part type="raw" size="256"/>
+  </struct>
+</datadef>
