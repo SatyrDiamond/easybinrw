@@ -200,7 +200,21 @@ class binread:
 
 	def raw(self, num): return self.str.read(num)
 	def string(self, num, **k): return self.str.read(num).split(b'\x00')[0].decode(**k)
-	def string16(self, num, **k): return self.str.read(num*2).decode(encoding='utf16').rstrip('\x00')
+	def string16(self, num, **k): 
+		outtxt = b''
+		e = True
+		for r in range(num):
+			p = self.str.read(2)
+			if p==b'\x00\x00': e = False
+			elif e: outtxt += p
+		return outtxt.decode(encoding='utf16').rstrip('\x00')
+	def string16_t(self, **k): 
+		outtxt = b''
+		while self.remaining():
+			p = self.str.read(2)
+			if p==b'\x00\x00': break
+			else: outtxt += p
+		return outtxt.decode(encoding='utf16')
 	def string_t(self, **k): 
 		out = b''
 		while self.remaining():
@@ -231,7 +245,6 @@ class binread:
 	def string_i16(self, **k): return self.str.read(self.int_u16()).split(b'\x00')[0].decode(**k)
 	def string_i32(self, **k): 
 		o = self.str.read(self.int_u32())
-		print(o)
 		return o.decode(**k).rstrip('\x00')
 	def string_i64(self, **k): return self.str.read(self.int_u64()).split(b'\x00')[0].decode(**k)
 	def string_i16_b(self, **k): return self.str.read(self.int_u16_b()).split(b'\x00')[0].decode(**k)
@@ -409,9 +422,9 @@ class binwrite:
 	def double_l(self, v): self.str.write(self.pak_double_l(v))
 
 	def raw(self, v): self.str.write(v)
-	def string(self, v, num):
+	def string(self, v, num, **k):
 		outtxt = np.zeros(1, (np.void, num))
-		outtxt[:] = str(v).encode()
+		outtxt[:] = str(v).encode(**k)
 		self.str.write(outtxt[0])
 	def string_nolimit(self, v): self.str.write(str(v).encode())
 	def string_t(self, v): 
