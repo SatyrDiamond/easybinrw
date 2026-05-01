@@ -25,6 +25,12 @@ class riff_chunk:
 			yield x
 			reader.isolate_end()
 
+	def read_file(self, filename, load_data):
+		ebrw_readstr = easybinrw.binread()
+		ebrw_readstr.load_file(filename)
+		self.read(ebrw_readstr, load_data)
+		return ebrw_readstr
+
 	def read(self, reader, load_data):
 		self.id = reader.raw(4)
 		self.size = reader.int_u32()
@@ -79,6 +85,11 @@ class riff_chunk:
 		ebrw_writestr.int_u32(len(outdata))
 		ebrw_writestr.raw(outdata)
 		if (len(outdata)%2): ebrw_writestr.raw(b'\0')
+
+	def write_data(self):
+		ebrw_writestr = easybinrw.binwrite()
+		self.write_chunk(ebrw_writestr)
+		return ebrw_writestr.getvalue()
 
 	def write_to_file(self, filename):
 		ebrw_writestr = easybinrw.binwrite()
